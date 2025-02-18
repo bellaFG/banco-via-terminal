@@ -21,13 +21,14 @@ namespace Banco
             do
             {
                 Console.WriteLine("\n╔══════════════════════════╗");
-                Console.WriteLine("║       MENU BANCÁRIO      ║");
-                Console.WriteLine("╠══════════════════════════╣");
-                Console.WriteLine("║ 1 - Sacar                ║");
-                Console.WriteLine("║ 2 - Depositar            ║");
-                Console.WriteLine("║ 3 - Informações da conta ║");
-                Console.WriteLine("║ 4 - Sair                 ║");
-                Console.WriteLine("╚══════════════════════════╝");
+                Console.WriteLine("║       MENU BANCÁRIO        ║");
+                Console.WriteLine("╠════════════════════════════╣");
+                Console.WriteLine("║ 1 - Sacar                  ║");
+                Console.WriteLine("║ 2 - Depositar              ║");
+                Console.WriteLine("║ 3 - Informações da conta   ║");
+                Console.WriteLine("║ 4 - Transferência bancária ║");
+                Console.WriteLine("║ 5 - Sair                   ║");
+                Console.WriteLine("╚════════════════════════════╝");
                 Console.Write("\nEscolha uma opção: ");
 
                 if (!int.TryParse(Console.ReadLine(), out opcao))
@@ -51,6 +52,9 @@ namespace Banco
                         info();
                         break;
                     case 4:
+                        transferir();
+                        break;
+                    case 5:
                         Console.WriteLine("\nObrigado por usar nosso banco! 👋");
                         break;
                     default:
@@ -131,6 +135,43 @@ namespace Banco
 
                 saldo += valorDeposito;
                 Console.WriteLine("\n✅ Depósito realizado com sucesso!");
+                Console.WriteLine($"💰 Novo saldo: R$ {saldo:F2}");
+                Thread.Sleep(3000);
+                Console.Clear();
+                break;
+            }
+        }
+
+        public void transferir()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("\n🔄 TRANSFERÊNCIA 🔄");
+                Console.Write("Digite o valor da transferência: ");
+
+                if (!float.TryParse(Console.ReadLine(), out float valorTransferencia))
+                {
+                    Console.WriteLine("\n⚠ Valor inválido. Digite um número.");
+                    Thread.Sleep(2000);
+                    continue;
+                }
+
+                if (valorTransferencia > saldo)
+                {
+                    Console.WriteLine("\n❌ Saldo insuficiente! Tente novamente.");
+                    Thread.Sleep(2000);
+                    continue;
+                }
+
+                Console.Write("Digite o nome do correntista para transferência: ");
+                string correntistaDestino = Console.ReadLine();
+
+                Console.WriteLine("\n⏳ Processando transferência...");
+                Thread.Sleep(3000);
+
+                saldo -= valorTransferencia;
+                Console.WriteLine("\n✅ Transferência realizada com sucesso!");
                 Console.WriteLine($"💰 Novo saldo: R$ {saldo:F2}");
                 Thread.Sleep(3000);
                 Console.Clear();
